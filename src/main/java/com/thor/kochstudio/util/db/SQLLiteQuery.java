@@ -1,5 +1,7 @@
 package com.thor.kochstudio.util.db;
 
+import com.thor.kochstudio.constants.Const;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,14 +26,61 @@ public class SQLLiteQuery
 	 * @throws Exception
 	 * @return
 	 */
-	public ArrayList<String[]> queryAll(String tablename, String[] columnNames) throws Exception
+	public ArrayList<String[]> queryAll(String tablename, String[] columnNames)
 	{
-		//f�r SQL-Abfragen
-		statement = connection.createStatement();
-		
-		resultSet = statement.executeQuery("SELECT * FROM " + tablename);
-		return writeResultSet(resultSet, columnNames);
+        try
+        {
+            //f�r SQL-Abfragen
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery("SELECT * FROM " + tablename);
+            return writeResultSet(resultSet, columnNames);
+        }
+        catch(SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
+            return null;
+        }
 	}
+
+
+    /**
+     * Gibt eine ArrayList aus Arrays aller Eintr�ge aus einer Tabelle zur�ck
+     * @param tablename
+     * @param columnNames
+     * @throws Exception
+     * @return
+     */
+    public ArrayList<String[]> selectQueryAll(String tablename, String[] columnNames, String[] select)
+    {
+        String selectString = "";
+
+        for (int i = 0; i < select.length; i++)
+        {
+            selectString += select[i];
+
+            if(select.length != i+1)
+            {
+                selectString.concat(",");
+            }
+        }
+
+        try
+        {
+            //f�r SQL-Abfragen
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery("SELECT " + selectString + " FROM " + tablename);
+            return writeResultSet(resultSet, columnNames);
+        }
+        catch(SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
+            return null;
+        }
+    }
 	
 	/**
 	 * Gibt eine ArrayList aus Arrays der gesuchten Eintr�ge aus einer Tabelle zur�ck
@@ -62,7 +111,6 @@ public class SQLLiteQuery
 	/**
 	 * erzeugt ArrayList mit Arrays aus einem ResultSet
 	 * @param resultSet
-	 * @param tablenames
 	 * @return
 	 * @throws SQLException
 	 */

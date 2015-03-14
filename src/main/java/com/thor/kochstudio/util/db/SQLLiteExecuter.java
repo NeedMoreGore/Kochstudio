@@ -1,5 +1,7 @@
 package com.thor.kochstudio.util.db;
 
+import com.thor.kochstudio.constants.Const;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -54,8 +56,59 @@ public class SQLLiteExecuter
 	public void createTable(String tablename, String execute) throws SQLException
 	{
 		statement = connection.createStatement();	
-		System.out.println("CREATE TABLE IF NOT EXISTS" + tablename + "(" + execute + ")");
-		statement.execute("CREATE TABLE IF NOT EXISTS " + tablename + "(" + execute + ")");
+
+        statement.execute("CREATE TABLE IF NOT EXISTS " + tablename + "(" + execute + ")");
 		statement.close();				
 	}
+
+    public void updateTable(String tablename, String[] columns, String... val)
+    {
+        try
+        {
+            statement = connection.createStatement();
+        }
+        catch(SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
+        }
+
+
+        String clms = "(";
+        String vls = "(NULL,";
+
+        for (int i = 0; i < columns.length; i++)
+        {
+            clms += columns[i];
+
+            if (i + 1 == columns.length)
+            {
+                clms += ")";
+            }
+            else
+            {
+                clms += ",";
+            }
+        }
+
+        for (int i = 0; i < val.length; i++) {
+            vls += val[i];
+
+            if (i + 1 == val.length)
+            {
+                vls += ")";
+            }
+            else
+            {
+                vls += ",";
+            }
+        }
+
+        try {
+            statement.execute(("INSERT INTO " + tablename + " " + clms + " VALUES " + vls));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class JSONReader 
 {
@@ -37,17 +38,18 @@ public class JSONReader
 	 */
 	public ArrayList<Integer> readCatPageIDs()
 	{
+
 		ArrayList<Integer> pageIDs = new ArrayList<Integer>();
 	    JSONArray arr = obj.getJSONObject("query").getJSONArray("categorymembers");
-	    
+
 	    for (int i = 0; i < arr.length(); i++)
 	    {
 	        int pageID = arr.getJSONObject(i).getInt("pageid");
-	        
+
 	        if(arr.getJSONObject(i).getString("title").contains("Kategorie") && !arr.getJSONObject(i).getString("title").contains("Getr\u00e4nke") &&!arr.getJSONObject(i).getString("title").contains("Pralinen, Bonbons und \u00c4hnliches"));
 	        	pageIDs.add(pageID);
 	    }
-	    
+
 	    return pageIDs;
 	}
 	
@@ -96,19 +98,28 @@ public class JSONReader
 	public ArrayList<String> readIngredients()
 	{
 		ArrayList<String> ingredients = new ArrayList<String>();
+        HashSet<String> hs = new HashSet<>();
+        int i = 0;
+
 		ingredients.clear();
-		int i = 0;
+
+
 		
 		while(obj.getJSONObject("parse").getJSONArray("links").length() > i)
 		{			
 			if(obj.getJSONObject("parse").getJSONArray("links").getJSONObject(i).toString().contains("Zutat:"))
 			{
 				ingredients.add(obj.getJSONObject("parse").getJSONArray("links").getJSONObject(i).get("*").toString().replace("Zutat:", "").replace(",", ""));
-			}
+                System.out.println("READER (Zutat): " + ingredients.get(ingredients.size()-1));
+            }
 
 			i++;
 		}
-				
+
+        hs.addAll(ingredients);
+        ingredients.clear();
+        ingredients.addAll(hs);
+
 		return ingredients;
 	}
 	

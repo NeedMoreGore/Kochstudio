@@ -9,8 +9,8 @@ public class RootLayoutController
 {
     public void startUpdate()
     {
-
       	UpdateHandler update = new UpdateHandler();
+
     	try {
 			update.execUpdate();
 		} catch (IOException e) {

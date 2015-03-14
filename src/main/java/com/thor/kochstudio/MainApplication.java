@@ -55,7 +55,7 @@ public class MainApplication extends Application {
         {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("/main/java/com/thor/kochstudio/fx/view/RootLayout.fxml"));
+            loader.setLocation(MainApplication.class.getResource("/java/com/thor/kochstudio/fx/view/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -79,7 +79,7 @@ public class MainApplication extends Application {
         try {
             //lade conententLayout
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("/main/java/com/thor/kochstudio/fx/view/ContentLayout.fxml"));
+            loader.setLocation(MainApplication.class.getResource("/java/com/thor/kochstudio/fx/view/ContentLayout.fxml"));
             AnchorPane contentLayout = (AnchorPane) loader.load();
                      
             //contentLayout zentrieren

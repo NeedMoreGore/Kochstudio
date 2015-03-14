@@ -2,6 +2,9 @@ package com.thor.kochstudio.constants;
 
 public class Const 
 {
+    //debugging
+    public static final boolean DEBUGMODE = true;
+
 	//dateipfad
 	public static final String DBFILEPATH = System.getProperty("user.dir") + "\\src\\main\\resources\\db\\kochstudio.db";
 	public static final String JSONFILEPATH = System.getProperty("user.dir") + "\\src\\main\\resources\\json\\RezepteInfo.json";
@@ -13,7 +16,10 @@ public class Const
 	public static final String READALLCAT = "http://www.rezeptewiki.org/api.php?format=json&action=query&list=categorymembers&cmtitle=Kategorie:Rezepte&cmlimit=5000";
 	public static final String READALLSUBCAT1 = "http://www.rezeptewiki.org/api.php?format=json&action=query&list=categorymembers&cmpageid=";
 	public static final String READALLSUBCAT2 = "&cmlimit=5000";
-    public static final String TB_RECIPEINFORMATION = "RECIPE_INFORMATION";
 
-    public static final boolean DEBUGMODE = false;
+    //SQL
+    public static final String TB_RECIPEINFORMATION = "RECIPE_INFORMATION";
+    public static final String TB_PAGE_IDS = "PAGE_IDS";
+
+
 }
