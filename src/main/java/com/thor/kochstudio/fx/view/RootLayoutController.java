@@ -1,5 +1,6 @@
 package com.thor.kochstudio.fx.view;
 
+import com.thor.kochstudio.constants.Const;
 import com.thor.kochstudio.functional.UpdateHandler;
 
 import java.io.IOException;
@@ -7,22 +8,22 @@ import java.sql.SQLException;
 
 public class RootLayoutController 
 {
+    /*
+    startet das Update
+     */
     public void startUpdate()
     {
       	UpdateHandler update = new UpdateHandler();
 
-    	try {
+    	try
+        {
 			update.execUpdate();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (org.json.simple.parser.ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
+		}
+        catch (IOException | org.json.simple.parser.ParseException | SQLException e)
+        {
+            if(Const.DEBUGMODE)
+			    e.printStackTrace();
+		}
 
     }
 }

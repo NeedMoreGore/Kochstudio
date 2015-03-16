@@ -59,20 +59,14 @@ import java.util.ArrayList;
 	     * Referenz auf die mainApplication
 	     */
 	    private MainApplication mainApp;
-	    private WebEngine webEngine;    
-	    private String urlTitle;
-	    private TextField[] tfArray = new TextField[8];
-	    	    
-	    public ContentLayoutController() 
-	    {
-	    }	    
+	    private WebEngine webEngine;
+        private TextField[] tfArray = new TextField[8];
 
 	    /**
 	     * Initialisiert die ControllerKlasse.
 	     * Wird automatisch aufgerufen nachdem die .fxml Datei geladen wurde
 	     */
-	    @FXML
-	    private void initialize() 
+	    public void initialize()
 	    {	    	
 	        // Initialisiert den TableView mit Treffern
 	        matchNumberColumn.setCellValueFactory(cellData -> cellData.getValue().numberProperty());
@@ -110,22 +104,25 @@ import java.util.ArrayList;
 	    }
 	    
 	    /**
-	     * l�dt die Seite f�r das ausgew�hlte Rezept
-	     * @param search
+	     * Seite des angeklickten Treffers im Browser anzeigen
+	     * @param search - SearchModel der Treffer
 	     */
 	    private void showRecipeDetails(SearchModel search) 
 	    {
 	        if (search != null) 
 	        {
-	        	urlTitle = search.getUrlTitle();
+                String urlTitle = search.getUrlTitle();
 	        	webEngine.load("http://www.rezeptewiki.org/wiki/" + urlTitle);	        	
 	        }   
 	    }
-	    
+
+        /*
+        Wird vom "Starte Suche" Button ausgeführt
+         */
 	    @FXML
-	    private void startSearch() throws org.json.simple.parser.ParseException, ParseException, IOException 
+	    public void startSearch() throws org.json.simple.parser.ParseException, ParseException, IOException
 	    {
-        	ArrayList<String> searchFor = new ArrayList<String>();
+        	ArrayList<String> searchFor = new ArrayList<>();
 	    	
 	    	int i = 0;
 	    	
@@ -146,18 +143,18 @@ import java.util.ArrayList;
 	    	try 
 	    	{
 				SearchRecipes.searchMatches(searchFor);
-			} catch (Exception e) 
+			}
+            catch (Exception e)
 	    	{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    	MainApplication.search();
 	    	
-	        // oberservable list Daten der Tabelle hinzuf�gen
-
+	        // oberservable list Daten der Tabelle hinzufügen
 	        matchesTable.setItems(mainApp.getMatches());           
 	    }	 
-	    
+
+        //Slider Wert aktualisieren
 	    public void setSlider(Number new_val)
 	    {
             slider.setValue(new_val.doubleValue());

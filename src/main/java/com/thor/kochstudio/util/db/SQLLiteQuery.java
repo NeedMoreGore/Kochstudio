@@ -20,11 +20,10 @@ public class SQLLiteQuery
 	}
 	
 	/**
-	 * Gibt eine ArrayList aus Arrays aller Eintr�ge aus einer Tabelle zur�ck
-	 * @param tablename
-	 * @param columnNames
-	 * @throws Exception
-	 * @return
+	 * Gibt eine ArrayList aus Arrays aller Einträge aus einer Tabelle zurück
+	 * @param tablename - Tabellenname
+	 * @param columnNames - Name der Spalten als Array
+	 * @return - gibt ArrayList aller Spalteneinträge zurück
 	 */
 	public ArrayList<String[]> queryAll(String tablename, String[] columnNames)
 	{
@@ -46,13 +45,12 @@ public class SQLLiteQuery
 
 
     /**
-     * Gibt eine ArrayList aus Arrays aller Eintr�ge aus einer Tabelle zur�ck
-     * @param tablename
-     * @param columnNames
-     * @throws Exception
-     * @return
+     * Gibt eine ArrayList aus Arrays aller Einträge aus einer Tabelle zurück
+     * @param tablename - Tabellenname
+     * @param columnNames - Name der Spalten als Array
+     * @return - Gibt ArrayList aus Arrays zurück
      */
-    public ArrayList<String[]> selectQueryAll(String tablename, String[] columnNames, String[] select)
+    public ArrayList<String[]> querySelect(String tablename, String[] columnNames, String[] select)
     {
         String selectString = "";
 
@@ -62,13 +60,13 @@ public class SQLLiteQuery
 
             if(select.length != i+1)
             {
-                selectString.concat(",");
+                selectString += ",";
             }
         }
 
         try
         {
-            //f�r SQL-Abfragen
+            //für SQL-Abfragen
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery("SELECT " + selectString + " FROM " + tablename);
@@ -81,16 +79,57 @@ public class SQLLiteQuery
             return null;
         }
     }
+
+    /**
+     * Gibt alle Einträge zurück, die gesucht wurden
+     * @param tablename - Tabellenname
+     * @param columnNames - Name der Spalten als Array
+     * @param select - Select statement ohne "SELECT "
+     * @param where - Where statement ohne "WHERE "
+     * @return - Gibt ArrayList aus Arrays zurück
+     */
+    public ArrayList<String[]> querySelectWhere(String tablename, String[] columnNames, String[] select, String where)
+    {
+        String selectString = "";
+
+        for (int i = 0; i < select.length; i++)
+        {
+            selectString += select[i];
+
+            if(select.length != i+1)
+            {
+                selectString += ",";
+            }
+        }
+
+        try
+        {
+            //für SQL-Abfragen
+            statement = connection.createStatement();
+
+            resultSet = statement.executeQuery("SELECT " + selectString + " FROM " + tablename + " WHERE " + where);
+            return writeResultSet(resultSet, columnNames);
+        }
+        catch(SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 	
 	/**
-	 * Gibt eine ArrayList aus Arrays der gesuchten Eintr�ge aus einer Tabelle zur�ck
-	 * @param tablename
-	 * @param columnNames
-	 * @param where
-	 * @return
-	 * @throws Exception
+	 * Gibt eine ArrayList aus Arrays der gesuchten Einträge aus einer Tabelle zurück
+	 * @param tablename - Tablename
+	 * @param columnNames - Name der Spalten als Array
+	 * @param where - Where statement ohne "WHERE "
+	 * @return - Gibt ArrayList aus Arrays zurück
+	 * @throws java.sql.SQLException
 	 */
-	public ArrayList<String[]> queryAllWhere(String tablename, String[] columnNames, String where) throws Exception
+	public ArrayList<String[]> queryWhere(String tablename, String[] columnNames, String where) throws SQLException
 	{
 		//f�r SQL-Abfragen
 		statement = connection.createStatement();
@@ -98,10 +137,18 @@ public class SQLLiteQuery
 		resultSet = statement.executeQuery("SELECT * FROM " + tablename + " WHERE " + where);
 		return writeResultSet(resultSet, columnNames);
 	}
-	
+
+    /**
+     * Gibt den Eintrag einer bestimmten ID zurück
+     * @param tablename - Tabellenname
+     * @param columnNames - Name der Spalten als Array
+     * @param id - ID for query
+     * @return - Gibt Array des Eintrags zurück
+     * @throws SQLException
+     */
 	public String[] queryID(String tablename, String[] columnNames, String id) throws SQLException
 	{
-		//f�r SQL-Abfragen
+		//für SQL-Abfragen
 		statement = connection.createStatement();
 
 		resultSet = statement.executeQuery("SELECT * FROM " + tablename + " WHERE ID = " + id);
@@ -110,8 +157,8 @@ public class SQLLiteQuery
 		
 	/**
 	 * erzeugt ArrayList mit Arrays aus einem ResultSet
-	 * @param resultSet
-	 * @return
+	 * @param resultSet - ResultSet der Queries
+	 * @return - Wandelt resultSet in ArrayList aus Arrays um
 	 * @throws SQLException
 	 */
 	public ArrayList<String[]> writeResultSet(ResultSet resultSet, String[] columnnames) throws SQLException
@@ -128,21 +175,28 @@ public class SQLLiteQuery
 			
 			list.add(query);
 		}
-		
+
 		return list;
 	}
-	
+
+    /**
+     * Erzeugt ein Array einer Abfrage einer Spalte
+     * @param resultSet - resultSet von query
+     * @param columnnames - Name der Spalten als Array
+     * @return - Gibt Array zurück
+     * @throws SQLException
+     */
 	public String[] writeSingleResultSet(ResultSet resultSet, String[] columnnames) throws SQLException
 	{
 		String[] query = new String[columnnames.length];
 		
 		for(int i = 0; i < columnnames.length; i++)
 			query[i] = resultSet.getString(columnnames[i]);
-				
+
 		return query;
 	}
 	/**
-	 * ResultSet schlie�en
+	 * ResultSet schließen
 	 */
 	public void close()
 	{

@@ -1,5 +1,6 @@
 package com.thor.kochstudio.util;
 
+@Deprecated
 public class Pair<A, B> {
 	  private String first;
 	  private String second;

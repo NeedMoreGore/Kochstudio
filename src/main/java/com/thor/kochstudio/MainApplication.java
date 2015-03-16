@@ -4,7 +4,6 @@
 
 package com.thor.kochstudio;
 
-import com.thor.kochstudio.functional.ManageFavourites;
 import com.thor.kochstudio.functional.SearchRecipes;
 import com.thor.kochstudio.fx.model.FavouritesModel;
 import com.thor.kochstudio.fx.model.SearchModel;
@@ -124,8 +123,6 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) 
     {
-    	ManageFavourites man = new ManageFavourites();
-    	man.loadStructure();
     	//l�dt das Hauptfenster
     	launch(args);   
       	

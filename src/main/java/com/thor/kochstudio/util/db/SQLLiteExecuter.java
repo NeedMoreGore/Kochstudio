@@ -9,9 +9,9 @@ import java.sql.Statement;
 
 public class SQLLiteExecuter 
 {
-	private Connection connection = null;
-	private PreparedStatement prepStatement = null;
-	private Statement statement = null;
+	private Connection connection;
+	private PreparedStatement prepStatement;
+	private Statement statement;
 	
 	public SQLLiteExecuter(Connection connection)
 	{
@@ -19,8 +19,8 @@ public class SQLLiteExecuter
 	}
 	
 	/**
-	 * f�gt Eintr�ge zu einer Tabelle hinzu
-	 * @param pattern - Muster f�r VALUES(pattern)
+	 * fügt Einträge zu einer Tabelle hinzu
+	 * @param pattern - Muster für VALUES(pattern)
 	 * @param data - Daten die einer Row hinzugef�gt werden sollen
 	 * @param tablename - Name der Tabelle
 	 */
@@ -38,8 +38,8 @@ public class SQLLiteExecuter
 	}
 	
 	/**
-	 * l�sche alle Eintr�ge aus Tabelle
-	 * @param tablename
+	 * lösche alle Einträge aus Tabelle
+	 * @param tablename - Tabellenname
 	 * @throws SQLException 
 	 */
 	public void clearTable(String tablename) throws SQLException
@@ -47,6 +47,25 @@ public class SQLLiteExecuter
 		prepStatement = connection.prepareStatement("DELETE FROM " + tablename);
 		prepStatement.executeUpdate();
 	}
+
+    /**
+     * Lösche Eintrag aus Tabelle mit WHERE-Bedingung
+     * @param tablename - Tabellenname
+     * @param where - Where Bedingung ohne "WHERE "
+     */
+    public void deleteEntry(String tablename, String where)
+    {
+        try
+        {
+            statement = connection.createStatement();
+            statement.execute("DELETE FROM " + tablename + " WHERE " + where);
+        }
+        catch(SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
+        }
+    }
 	
 	/*
 	 * @param tablename - Name der Tabelle
@@ -61,8 +80,17 @@ public class SQLLiteExecuter
 		statement.close();				
 	}
 
+    /**
+     * Fügt neue Einträge einer Tabelle hinzu
+     * @param tablename - Tabellenname
+     * @param columns - Name der Spalten als Array
+     * @param val - Werte  als Array (erste Spalte(ID) ist automatisch NULL)
+     */
     public void updateTable(String tablename, String[] columns, String... val)
     {
+        String clms = "(";
+        String vls = "(NULL,";
+
         try
         {
             statement = connection.createStatement();
@@ -73,10 +101,7 @@ public class SQLLiteExecuter
                 e.printStackTrace();
         }
 
-
-        String clms = "(";
-        String vls = "(NULL,";
-
+        //Werte formatieren
         for (int i = 0; i < columns.length; i++)
         {
             clms += columns[i];
@@ -91,7 +116,8 @@ public class SQLLiteExecuter
             }
         }
 
-        for (int i = 0; i < val.length; i++) {
+        for (int i = 0; i < val.length; i++)
+        {
             vls += val[i];
 
             if (i + 1 == val.length)
@@ -104,11 +130,45 @@ public class SQLLiteExecuter
             }
         }
 
-        try {
+        try
+        {
             statement.execute(("INSERT INTO " + tablename + " " + clms + " VALUES " + vls));
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        catch (SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
+        }
+    }
+
+    /**
+     * Löscht Einträge aus RECIPE_INFORMATION, wenn die Rezepte nicht mehr existieren
+     */
+    public void deleteIfNotExists()
+    {
+        try
+        {
+            statement = connection.createStatement();
+        }
+        catch(SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
+        }
+
+        try
+        {
+           statement.execute("DELETE FROM RECIPE_INFORMATION " +
+                   "WHERE NOT EXISTS (" +
+                   "SELECT p.PAGE_ID, r.PAGE_ID " +
+                   "FROM PAGE_IDS p, RECIPE_INFORMATION r " +
+                   "WHERE r.PAGE_ID = p.PAGE_ID)");
+        }
+        catch(SQLException e)
+        {
+            if(Const.DEBUGMODE)
+                e.printStackTrace();
         }
     }
 }

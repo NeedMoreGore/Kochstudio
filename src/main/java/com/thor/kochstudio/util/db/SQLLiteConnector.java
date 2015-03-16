@@ -1,5 +1,7 @@
 package com.thor.kochstudio.util.db;
 
+import com.thor.kochstudio.constants.Const;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,8 +9,7 @@ import java.sql.SQLException;
 
 public class SQLLiteConnector 
 {
-	private static Connection connect = null;
-	private String path = "";
+    private String path;
 	
 	public SQLLiteConnector(String path)
 	{
@@ -23,18 +24,21 @@ public class SQLLiteConnector
 			Class.forName("org.sqlite.JDBC");
 			
 			//konfiguriere connection
-			connect = DriverManager.getConnection("jdbc:sqlite:" + path);	
-			System.out.println("Datenbank erfolgreich geöffnet.");
+            Connection connect = DriverManager.getConnection("jdbc:sqlite:" + path);
+
+            if(Const.DEBUGMODE)
+			    System.out.println("Datenbank erfolgreich geöffnet.");
 			
 			return connect;
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();
-			
-			System.out.println("Fehler: Datenbank konnte nicht geöffnet werden.");
-			
-			return null;
+            if(Const.DEBUGMODE)
+            {
+                e.printStackTrace();
+                System.out.println("Fehler: Datenbank konnte nicht geöffnet werden.");
+            }
+            return null;
 		}
 	}
 }

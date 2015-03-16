@@ -8,23 +8,20 @@ public class FavouritesModel
 {
 	private StringProperty name;
 	private String urlTitle;
-	private boolean isRecipe;
-
-
+    private boolean isRecipe;
 	/**
 	 * Objekt von Treffer(index) erstellen
 	 * @param index
 	 */
     public FavouritesModel(int index) 
     {
-    	this.urlTitle = SearchRecipes.getMatches().get(index).toString();
+    	this.urlTitle = SearchRecipes.getMatches().get(index);
     	this.name = new SimpleStringProperty(SearchRecipes.getMatches().get(index).replace("_", " "));
     	this.isRecipe = true;
     }
     
     /**
      * Objekt von Ordner erstellen
-     * @param folderName
      */
     public FavouritesModel(String name, boolean isRecipe)
     {

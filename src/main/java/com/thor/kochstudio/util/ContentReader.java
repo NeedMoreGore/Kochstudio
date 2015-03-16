@@ -12,14 +12,11 @@ import java.net.URL;
 
 public class ContentReader 
 {	
-	public ContentReader()
-	{		
-	}
-	
+
 	/**
 	 * liest den Inhalt einer Seite und gibt ihn als String zurück
-	 * @param urlString
-	 * @return
+	 * @param urlString - url als String
+	 * @return - Inhalt der Seite als String
 	 * @throws IOException
 	 */
 	public String read(String urlString) throws IOException
@@ -39,6 +36,4 @@ public class ContentReader
 		
 		return output2;
 	}
-	
-	
 }

@@ -1,12 +1,18 @@
 package com.thor.kochstudio.functional;
 
+import com.thor.kochstudio.constants.Const;
 import com.thor.kochstudio.util.db.SQLLiteHandler;
 
 import java.util.ArrayList;
 
 public class ManageFavourites 
 {	
-	private SQLLiteHandler sqlHandler = new SQLLiteHandler();
+	private SQLLiteHandler sqlHandler;
+
+    public ManageFavourites()
+    {
+        sqlHandler = new SQLLiteHandler();
+    }
 	
 	public void addFavourites()
 	{
@@ -17,27 +23,23 @@ public class ManageFavourites
 	{
 
 	}
-	
-	/*
-	 * L�dt die Ordnerstruktur der Favoriten
-	 */
+
+    /*
+    lädt die Ordnerstruktur der Favoriten
+     */
 	public void loadStructure()
 	{
 		String[] columns = {"ID","NAME","PARENT_ID"};
 		ArrayList<String[]> result = null;
 
-		try {
-			result = sqlHandler.query().queryAllWhere("FAVOURITES_FOLDER", columns, "PARENT_ID IS NULL");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try
+        {
+			result = sqlHandler.query().queryWhere("FAVOURITES_FOLDER", columns, "PARENT_ID IS NULL");
 		}
-		for(int i = 0; i < result.size(); i++)
-		{
-			String singleResult[] = result.get(i);
-			
-			for(int j = 0; j < singleResult.length; j++)	
-				System.out.println(singleResult[j]);
+        catch (Exception e)
+        {
+            if(Const.DEBUGMODE)
+			    e.printStackTrace();
 		}
 	}
 }

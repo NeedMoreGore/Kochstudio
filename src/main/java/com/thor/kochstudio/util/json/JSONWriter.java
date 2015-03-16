@@ -4,7 +4,6 @@
 
 package com.thor.kochstudio.util.json;
 
-import com.thor.kochstudio.constants.Const;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,6 +11,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/*
+@deprecated - Information will now be written in database
+ */
+@Deprecated
 public class JSONWriter 
 {
 	private FileWriter file = null;
@@ -49,13 +52,14 @@ public class JSONWriter
 	
 	/**
 	 * schreibt das JSON-File auf die Festplatte
+     * @param path - path to the .json save location
 	 */
-	public void writToFile()
+	public void writToFile(String path)
 	{		
 		System.out.println(count + "Rezepte verfügbar");
 		try 
 		{
-			file = new FileWriter(Const.JSONFILEPATH);
+			file = new FileWriter(path);
 		} 
 		catch (IOException e) 
 		{

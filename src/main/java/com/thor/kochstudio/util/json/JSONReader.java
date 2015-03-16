@@ -4,8 +4,6 @@
 
 package com.thor.kochstudio.util.json;
 
-import com.thor.kochstudio.constants.Const;
-import com.thor.kochstudio.util.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,18 +18,13 @@ import java.util.HashSet;
 
 public class JSONReader 
 {
-	private JSONObject obj = null;
-	
+	private JSONObject obj;
+
 	public JSONReader(String jsonObject)
 	{
 		this.obj = new JSONObject(jsonObject);
 	}
-	
-	public JSONReader()
-	{
-		
-	}
-	       
+
 	/**
 	 * liest PageIDs der Kategorien aus
 	 * @return
@@ -129,10 +122,13 @@ public class JSONReader
 	 * @return
 	 * @throws IOException
 	 * @throws ParseException
-	 */	
-	public String readFromFile() throws IOException, ParseException
+     * @param path - path to .json to read
+     * @deprecated - Wird nicht mehr benötigt, da Datenbank vorhanden ist
+	 */
+    @Deprecated
+	public String readFromFile(String path) throws IOException, ParseException
 	{		
-		FileInputStream is = new FileInputStream(Const.JSONFILEPATH);
+		FileInputStream is = new FileInputStream(path);
 		InputStreamReader isr = new InputStreamReader(is);
 		JSONParser parser = new JSONParser();
 		org.json.simple.JSONArray arr = new org.json.simple.JSONArray();
@@ -143,27 +139,5 @@ public class JSONReader
 		jsonString = arr.toString();
 		return jsonString;
 	}
-			
-	/**
-	 * gibt die Eintr�ge aus .json Datei zur�ck
-	 * @param jsonString
-	 * @return
-	 */
-	public ArrayList<Pair<String, String>> readEntries(String jsonString)
-	{
-		String[] infos = new String[2];
-		ArrayList<Pair<String, String>> entries = new ArrayList<Pair<String, String>>();
-		JSONArray array = new JSONArray(jsonString);
-		
-		for(int i = 0; i < array.length(); i++)
-		{
-			entries.add(new Pair(array.getJSONObject(i).getString("title"),array.getJSONObject(i).getJSONArray("Zutaten").toString()));  //= array.getJSONObject(i).getString("title");
-			//infos[1] = array.getJSONObject(i).getJSONArray("Zutaten").toString();
-			
-			//entries.add(infos);
-		}
-		
-		return entries;
-	}	
 }
 	

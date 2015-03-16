@@ -17,13 +17,13 @@ public class SearchModel
 
 	/**
 	 * Objekt von Treffer(index) erstellen
+     * Hält Daten für das Layout vor
 	 * @param index
 	 */
-	
     public SearchModel(int index) 
     {
+        count++;
     	this.match = new SimpleStringProperty(SearchRecipes.getMatches().get(index).replace("_", " "));
-    	count++;
     	this.number = new SimpleStringProperty(String.valueOf(count)); 
     	this.urlTitle = SearchRecipes.getMatches().get(index);
     }
@@ -59,4 +59,3 @@ public class SearchModel
     	return urlTitle;
     }
 }
-
