@@ -4,6 +4,7 @@
 
 package com.thor.kochstudio;
 
+import com.thor.kochstudio.constants.Const;
 import com.thor.kochstudio.functional.SearchRecipes;
 import com.thor.kochstudio.fx.model.FavouritesModel;
 import com.thor.kochstudio.fx.model.SearchModel;
@@ -39,7 +40,7 @@ public class MainApplication extends Application {
     public void start(Stage primaryStage) 
     {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Kochstudio v0.1a");
+        this.primaryStage.setTitle(Const.WINDOWTITLE);
 
         initRootLayout();    
         showContentLayout();     

@@ -96,8 +96,6 @@ public class JSONReader
 
 		ingredients.clear();
 
-
-		
 		while(obj.getJSONObject("parse").getJSONArray("links").length() > i)
 		{			
 			if(obj.getJSONObject("parse").getJSONArray("links").getJSONObject(i).toString().contains("Zutat:"))
@@ -105,7 +103,6 @@ public class JSONReader
 				ingredients.add(obj.getJSONObject("parse").getJSONArray("links").getJSONObject(i).get("*").toString().replace("Zutat:", "").replace(",", ""));
                 System.out.println("READER (Zutat): " + ingredients.get(ingredients.size()-1));
             }
-
 			i++;
 		}
 
@@ -115,8 +112,7 @@ public class JSONReader
 
 		return ingredients;
 	}
-	
-	
+
 	/**
 	 * lese json-file
 	 * @return

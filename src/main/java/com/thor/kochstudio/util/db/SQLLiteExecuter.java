@@ -133,7 +133,6 @@ public class SQLLiteExecuter
         try
         {
             statement.execute(("INSERT INTO " + tablename + " " + clms + " VALUES " + vls));
-
         }
         catch (SQLException e)
         {

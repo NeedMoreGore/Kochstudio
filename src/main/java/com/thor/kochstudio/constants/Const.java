@@ -5,6 +5,9 @@ public class Const
     //debugging
     public static final boolean DEBUGMODE = true;
 
+    //fenster
+    public static final String WINDOWTITLE = "Kochstudio v0.2";
+
 	//dateipfad
 	public static final String DBFILEPATH = System.getProperty("user.dir") + "\\src\\main\\resources\\db\\kochstudio.db";
 
@@ -17,5 +20,8 @@ public class Const
     //SQL
     public static final String TB_RECIPEINFORMATION = "RECIPE_INFORMATION";
     public static final String TB_PAGE_IDS = "PAGE_IDS";
-    public static final String TB_BLACKLIST = "BLACKLIST";
+    public static final String TB_INGREDIENTS = "INGREDIENTS";
+
+    //UpdateMode
+    public static final boolean UPDATE_INGREDIENTS = true;
 }

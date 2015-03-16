@@ -24,7 +24,7 @@ public class UpdateHandler
     private SQLLiteHandler sql;
     private ArrayList<Integer> temp1;
     private ArrayList<Integer> temp2;
-    private ArrayList<String> blackList;
+    private static ArrayList<String> ingredientsList;
 
     //Konstruktor
     public UpdateHandler()
@@ -35,6 +35,7 @@ public class UpdateHandler
         sql = new SQLLiteHandler();
         temp1 = new ArrayList<>();
         temp2 = new ArrayList<>();
+        ingredientsList =  new ArrayList<>();
     }
 
     /*
@@ -108,7 +109,7 @@ public class UpdateHandler
         String newtitle;
         ArrayList<String> ingredients;
         ArrayList<String[]> pageIDList;
-        String[] recipe_clms = {"ID", "TITLE", "INGREDIENTS", "PAGE_ID"};
+        String[] recipe_clms = {"ID", "TITLE", "INGREDIENTS", "PAGE_ID", "QUANTITY"};
         String[] pageId_clms = {"PAGE_ID"};
         String[] select = {"PAGE_ID"};
         String[] pageID;
@@ -151,6 +152,10 @@ public class UpdateHandler
                 newtitle = jsonReader.readPageTitle();
                 ingredients = jsonReader.readIngredients();
 
+                //update INGREDIENTS in db
+                if(Const.UPDATE_INGREDIENTS)
+                    createIngredientList(ingredients);
+
                 for (int j = 0; j < ingredients.size(); j++)
                 {
                     ingredientString += ingredients.get(j);
@@ -163,19 +168,47 @@ public class UpdateHandler
                 //String DB-gerecht formatieren
                 ingredientString = ingredientString.replace("'", "");
 
-                String vls[] = {"'" + newtitle + "'", "'" + ingredientString + "'", "'" + pageID[0] + "'"};
+                String vls[] = {"'" + newtitle + "'", "'" + ingredientString + "'", "'" + pageID[0] + "'", "'" + ingredients.size() + "'"};
 
                 //nur wenn das Rezept einen Titel hat
                 if (newtitle != null) {
                     //jsonWriter.write(pageID, newtitle, ingredients);
                     sql.execute().updateTable(Const.TB_RECIPEINFORMATION, recipe_clms, vls);
                 }
-
-
             }
         }
+        if(Const.UPDATE_INGREDIENTS)
+            updateIngredientsList();
+
         if(Const.DEBUGMODE)
             System.out.println("Update Complete.");
+    }
+
+    /**
+     * Speichert Zutaten in eine ArrayList, wenn Update Zutaten aktiviert ist
+     * @param ingredients
+     */
+    public void createIngredientList(ArrayList<String> ingredients)
+    {
+        HashSet<String> hs = new HashSet<>();
+
+        hs.addAll(ingredients);
+        ingredientsList.addAll(hs);
+    }
+
+    /**
+     * Updatet die Tabelle INGREDIENTS in der DB, wenn Update Zutaten aktiviert ist
+     */
+    public void updateIngredientsList()
+    {
+        String[] val = new String[1];
+        String[] clms = {"ID", "NAME"};
+
+        for(String ingredient : ingredientsList)
+        {
+            val[0] = ingredient;
+            sql.execute().updateTable(Const.TB_INGREDIENTS, clms, "'" + val[0] + "'");
+        }
     }
 
     /*
