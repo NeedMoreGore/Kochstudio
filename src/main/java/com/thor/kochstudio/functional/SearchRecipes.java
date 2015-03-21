@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class SearchRecipes 
 {
 	private static ArrayList<String> matches = new ArrayList<>();
+    private static int sliderValue;
+    private static boolean sliderState;
     /**
 	 * fügt die Infos (Titel, Zutaten) der gesuchten Rezepte zu "matches" hinzu
 	 * @param searchFor - Liste mit Zutaten die gesucht werden
@@ -34,8 +36,8 @@ public class SearchRecipes
             if(Const.DEBUGMODE)
                 e.printStackTrace();
         }
-        String[] columns = {"TITLE", "INGREDIENTS", "PAGE_ID"};
-        String[] temp = new String[2];
+        String[] columns = {"TITLE", "INGREDIENTS", "PAGE_ID", "QUANTITY"};
+        String[] temp = new String[4];
 
 		int size = query.queryAll("RECIPE_INFORMATION", columns).size();
 		boolean match = false;
@@ -86,13 +88,38 @@ public class SearchRecipes
             }
 				//match hinzufügen wenn alle Zutaten im Rezept vorkommen
 				if(match)
-					matches.add(temp[0]);
+                {
+                    if(sliderState)
+                    {
+                        int buyAdditional = Integer.valueOf(temp[3]);
+
+                        if (buyAdditional <= sliderValue)
+                            matches.add(temp[0]);
+                    }
+                    else
+                        matches.add(temp[0]);
+                }
 		}
             //Debug
             MessageHelper.createInfoMessage(Const.DEBUGMODE, "Suche abgeschlossen. " + matches.size() + " Rezepte gefunden.", SearchRecipes.class.getName());
 
             query.close();
 	}
+
+    public static void setSliderValue(int add)
+    {
+        sliderValue = add;
+    }
+
+    public static void setSliderState(boolean state)
+    {
+        sliderState = state;
+    }
+
+    public static boolean getSliderState()
+    {
+        return sliderState;
+    }
 
     /*
     @return - gibt die Treffer der Suche als ArrayList<String> zurück
@@ -101,6 +128,56 @@ public class SearchRecipes
 	{
 		return matches;
 	}
-	
+
+
+
+
+
+
+    //-----------------------------------------------//
+    //------------------DEPRECATED-------------------//
+    //-----------------------------------------------//
+
+
+    /**
+     * Zähle die Anzahl der Zutaten - die gesuchten Zutaten
+     * @param ignore - Gesuchte Zutaten
+     * @param ingredients - ZUtaten des Rezepts
+     * @return - Anzahl für maximale Zukäufe als int
+     * @deprecated - Anzahl steht in der Datenbank
+     */
+    @Deprecated
+    private static int countIngredients(ArrayList<String> ignore, ArrayList<String> ingredients)
+    {
+        return ingredients.size() - ignore.size();
+    }
+
+    /**
+     * Wandelt String der durch "," getrennt ist in Liste um
+     * @param input - String
+     * @return - ArrayList aus Strings
+     */
+    @Deprecated
+    private static ArrayList<String> StringToList(String input)
+    {
+        ArrayList<String> output = new ArrayList<>();
+        //solange mehr als eine Zutat im String steht
+        while(input.contains(","))
+        {
+            int endIndex;
+            String add;
+
+            endIndex = input.indexOf(",", 1);
+            System.out.println("ENDINDEX :" + endIndex);
+            add = input.substring(0, endIndex);
+            System.out.println("ADD : " + add);
+            input = input.replace(add, "");
+            output.add(add);
+        }
+
+        output.add(input);
+
+        return output;
+    }
 }
 

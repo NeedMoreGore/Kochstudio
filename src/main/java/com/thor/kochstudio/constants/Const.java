@@ -3,7 +3,7 @@ package com.thor.kochstudio.constants;
 public class Const 
 {
     //debugging
-    public static final boolean DEBUGMODE = false;
+    public static final boolean DEBUGMODE = true;
 
     //fenster
     public static final String WINDOWTITLE = "Kochstudio v0.2";

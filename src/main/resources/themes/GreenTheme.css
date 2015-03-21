@@ -192,6 +192,23 @@
 	-fx-selected: #3B3B3B;
 }
 
+.check-box>.box {
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-background-color: black;
+}
+
+.check-box>.box>.mark {
+  -fx-background-color: red;
+  -fx-background-position: center;
+  -fx-background-repeat: stretch;
+  -fx-shape: none;
+}
+
+.check-box:selected>.box>.mark{
+  -fx-background-color: green;
+}
+
 /*
 ----------------------------------------------------------
 --------------------Custom Buttons------------------------

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.scene.control.*?>
@@ -36,14 +37,17 @@
                                           <Label layoutX="223.0" layoutY="100.0" text="7. Zutat" />
                                           <Label layoutX="223.0" layoutY="142.0" text="8. Zutat" />
                                           <Button layoutX="289.0" layoutY="180.0" mnemonicParsing="false" onAction="#startSearch" prefHeight="25.0" prefWidth="86.0" text="Starte Suche" />
-                                          <Label layoutX="14.0" layoutY="223.0" prefHeight="16.0" prefWidth="419.0" text="Hinweis: Zutaten nur im Singular suchen, sonst werden sie nicht gefunden." />
-                                          <Label layoutX="5.0" layoutY="187.0" text="max. Zukauf:" />
-                                          <Slider fx:id="slider" blockIncrement="1.0" layoutX="77.0" layoutY="187.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" />
-                                          <Label fx:id="sliderLabel" alignment="CENTER_RIGHT" layoutX="216.0" layoutY="180.0" prefHeight="28.0" prefWidth="19.0" text="0">
+                                          <Label layoutX="14.0" layoutY="242.0" prefHeight="16.0" prefWidth="419.0" text="Hinweis: Zutaten nur im Singular suchen, sonst werden sie nicht gefunden." />
+                                          <Label layoutX="3.0" layoutY="187.0" text="max. Zukauf:" />
+                                          <Slider fx:id="slider" blockIncrement="1.0" layoutX="72.0" layoutY="187.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" />
+                                          <Label fx:id="sliderLabel" alignment="CENTER_RIGHT" layoutX="206.0" layoutY="180.0" prefHeight="28.0" prefWidth="19.0" text="0">
                                              <font>
                                                 <Font name="Arial Bold" size="30.0" />
                                              </font>
                                           </Label>
+                                          <CheckBox fx:id="checkBox" layoutX="129.0" layoutY="215.0" mnemonicParsing="false" onAction="#setSliderState" prefHeight="17.0" prefWidth="10.0" />
+                                          <Label layoutX="85.0" layoutY="216.0" text="On/Off:" />
+                                          <Button fx:id="propertiesButton" layoutX="174.0" layoutY="208.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" />
                                        </children>
                                     </AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="280.0" prefWidth="300.0">

@@ -52,6 +52,9 @@ import java.util.ArrayList;
         //Search: ContextMenu
         @FXML
         private MenuItem addFavouritesContext;
+        //Search: CheckBox
+        @FXML
+        private CheckBox checkbox;
 	    //Favourites: TreeView
 	    @FXML
 	    private TreeView<String> tree;
@@ -254,7 +257,22 @@ import java.util.ArrayList;
 	    {
             slider.setValue(new_val.doubleValue());
             int sliderText = (int) Math.round(slider.getValue());
-            sliderLabel.setText(String.valueOf(sliderText)); 
+            sliderLabel.setText(String.valueOf(sliderText));
+            SearchRecipes.setSliderValue(sliderText);
 	    }
+
+        /**
+         * Slider Status aktualisieren und switchen
+         */
+        @FXML
+        public void setSliderState()
+        {
+            boolean state = SearchRecipes.getSliderState();
+            if(state)
+                SearchRecipes.setSliderState(false);
+            else
+                SearchRecipes.setSliderState(true);
+        }
+
 }
 
