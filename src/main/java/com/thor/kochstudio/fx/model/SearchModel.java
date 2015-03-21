@@ -8,7 +8,7 @@ import com.thor.kochstudio.functional.SearchRecipes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class SearchModel 
+public class SearchModel
 {
 	private static int count = 0;
 	private StringProperty match;
@@ -18,7 +18,7 @@ public class SearchModel
 	/**
 	 * Objekt von Treffer(index) erstellen
      * Hält Daten für das Layout vor
-	 * @param index
+	 * @param index - index des Models
 	 */
     public SearchModel(int index) 
     {
@@ -37,12 +37,7 @@ public class SearchModel
     {
     	return match;
     }
-    
-    public String getNumber()
-    {
-    	return number.get();
-    }
-    
+
     public StringProperty numberProperty()
     {
 		return number;

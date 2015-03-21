@@ -29,7 +29,7 @@ public class UpdateHandler
     //Konstruktor
     public UpdateHandler()
     {
-        recipePageIDs = new ArrayList<Integer>();
+        recipePageIDs = new ArrayList<>();
         cr = new ContentReader();
         jsonReader = null;
         sql = new SQLLiteHandler();
@@ -85,7 +85,7 @@ public class UpdateHandler
      */
     public void writePageIds()
     {
-        HashSet<Integer> hs = new HashSet<Integer>();
+        HashSet<Integer> hs = new HashSet<>();
         String[] columnnames = {"ID", "PAGE_ID"};
         
         //entferne alle Duplikate
@@ -97,7 +97,7 @@ public class UpdateHandler
         for(int pageID : recipePageIDs)
         {
             String id = String.valueOf(pageID);
-            sql.execute().updateTable(Const.TB_PAGE_IDS, columnnames, id);
+            sql.execute().insertIntoTable(Const.TB_PAGE_IDS, columnnames, id);
         }
     }
 
@@ -173,7 +173,7 @@ public class UpdateHandler
                 //nur wenn das Rezept einen Titel hat
                 if (newtitle != null) {
                     //jsonWriter.write(pageID, newtitle, ingredients);
-                    sql.execute().updateTable(Const.TB_RECIPEINFORMATION, recipe_clms, vls);
+                    sql.execute().insertIntoTable(Const.TB_RECIPEINFORMATION, recipe_clms, vls);
                 }
             }
         }
@@ -186,7 +186,7 @@ public class UpdateHandler
 
     /**
      * Speichert Zutaten in eine ArrayList, wenn Update Zutaten aktiviert ist
-     * @param ingredients
+     * @param ingredients - ArrayListe mit Zutaten
      */
     public void createIngredientList(ArrayList<String> ingredients)
     {
@@ -207,7 +207,7 @@ public class UpdateHandler
         for(String ingredient : ingredientsList)
         {
             val[0] = ingredient;
-            sql.execute().updateTable(Const.TB_INGREDIENTS, clms, "'" + val[0] + "'");
+            sql.execute().insertIntoTable(Const.TB_INGREDIENTS, clms, "'" + val[0] + "'");
         }
     }
 

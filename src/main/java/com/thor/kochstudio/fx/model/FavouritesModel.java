@@ -1,46 +1,50 @@
 package com.thor.kochstudio.fx.model;
 
-import com.thor.kochstudio.functional.SearchRecipes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class FavouritesModel 
+/**
+ * Wird vorerst nicht genutzt
+ */
+@Deprecated
+public class FavouritesModel
 {
-	private StringProperty name;
-	private String urlTitle;
+    private static int index = 0;
+	private StringProperty propertyName;
+    private int id;
     private boolean isRecipe;
-	/**
-	 * Objekt von Treffer(index) erstellen
-	 * @param index
-	 */
-    public FavouritesModel(int index) 
+
+    //rootItemModel
+    public FavouritesModel(String name, int id, boolean isRecipe)
     {
-    	this.urlTitle = SearchRecipes.getMatches().get(index);
-    	this.name = new SimpleStringProperty(SearchRecipes.getMatches().get(index).replace("_", " "));
-    	this.isRecipe = true;
+        this.propertyName = new SimpleStringProperty(name);
+        this.id = id;
+        this.isRecipe = isRecipe;
+        index = index + 1;
+    }
+
+    public void setPropertyNameString(String name)
+    {
+        this.propertyName = new SimpleStringProperty(name);
     }
     
-    /**
-     * Objekt von Ordner erstellen
-     */
-    public FavouritesModel(String name, boolean isRecipe)
+    public String getPropertyNameString()
     {
-    	this.name = new SimpleStringProperty(name);
-    	this.isRecipe = isRecipe;
+        return propertyName.get();
     }
-    
-    public String getName() 
+
+    public StringProperty getPropertyName()
     {
-        return name.get();
+        return propertyName;
     }
-    
-    public StringProperty nameProperty()
+
+    public int getId()
     {
-    	return name;
+        return id;
     }
-    
-    public String getUrlTitle()
+
+    public boolean getIsRecipe()
     {
-    	return urlTitle;
+        return isRecipe;
     }
 }

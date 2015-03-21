@@ -26,6 +26,8 @@ public class MainApplication extends Application {
     private BorderPane rootLayout;
     
     private static ObservableList<SearchModel> matches = FXCollections.observableArrayList();
+
+    @Deprecated
     private static ObservableList<FavouritesModel> favourites = FXCollections.observableArrayList();
 
     public MainApplication() 
@@ -34,7 +36,7 @@ public class MainApplication extends Application {
     }
 
     /**
-     * f�r jeden Treffer wird ein SearchModel Objekt erzeugt
+     * für jeden Treffer wird ein SearchModel Objekt erzeugt
      */
     @Override
     public void start(Stage primaryStage) 
@@ -94,29 +96,20 @@ public class MainApplication extends Application {
         }
     }
 
-    
     public Stage getPrimaryStage() {
         return primaryStage;
     }
-    
+
+    /**
+     * Erzeugt für jeden Treffer ein SearchModel
+     */
     public static void search()
     {  	
     	matches.clear();
     	for(int i = 0; i < SearchRecipes.getMatches().size(); i++)
     		matches.add(new SearchModel(i));    	
     }
-    
-    public static void getFavourites()
-    {
-    	
-    }
-    
-    //testen
-    public static SearchModel addToFavourites(int treffer)
-    {
-    	return matches.get(treffer - 1);    	
-    }
-    
+
     public ObservableList<SearchModel> getMatches() 
     {
         return matches;
@@ -127,6 +120,24 @@ public class MainApplication extends Application {
     	//l�dt das Hauptfenster
     	launch(args);   
       	
+    }
+
+
+
+    //-----------------------------------------------//
+    //------------------DEPRECATED-------------------//
+    //-----------------------------------------------//
+
+    @Deprecated
+    public static void loadFavourites(FavouritesModel model)
+    {
+        favourites.add(model);
+    }
+
+    @Deprecated
+    public ObservableList<FavouritesModel> getFavourites()
+    {
+        return favourites;
     }
        
 }

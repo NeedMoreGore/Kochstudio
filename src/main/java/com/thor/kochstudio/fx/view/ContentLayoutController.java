@@ -5,7 +5,9 @@
 package com.thor.kochstudio.fx.view;
 
 import com.thor.kochstudio.MainApplication;
+import com.thor.kochstudio.functional.ManageFavourites;
 import com.thor.kochstudio.functional.SearchRecipes;
+import com.thor.kochstudio.fx.model.LazyTreeItem;
 import com.thor.kochstudio.fx.model.SearchModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,7 +18,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-	public class ContentLayoutController 
+	public class ContentLayoutController
 	{
 		//Search: TableView
 	    @FXML
@@ -47,20 +49,29 @@ import java.util.ArrayList;
 	    private TextField tf7;
 	    @FXML
 	    private TextField tf8;
+        //Search: ContextMenu
+        @FXML
+        private MenuItem addFavouritesContext;
 	    //Favourites: TreeView
 	    @FXML
-	    private TreeView<String> tree;  
+	    private TreeView<String> tree;
+        //Favourites: ContextMenu
+        @FXML
+        private MenuItem addNewFolder;
+        @FXML
+        private MenuItem deleteFavourites;
 	    //WebView
 	    @FXML
 	    private WebView webView;
-	   
-	        
+
 	    /**
 	     * Referenz auf die mainApplication
 	     */
 	    private MainApplication mainApp;
 	    private WebEngine webEngine;
         private TextField[] tfArray = new TextField[8];
+        private ManageFavourites favourites = new ManageFavourites();
+        private LazyTreeItem rootItem;
 
 	    /**
 	     * Initialisiert die ControllerKlasse.
@@ -75,24 +86,32 @@ import java.util.ArrayList;
 	        //webView starten
 	        webEngine = webView.getEngine();
 	        webEngine.load("http://www.rezeptewiki.org/wiki/Hauptseite");
-	        webEngine.setJavaScriptEnabled(true);
+            //webEngine.load("file:///G:/Workspace/IntelliJIDEA/kochstudio/src/test/resources/Favourites/Google.htm") ;
+            webEngine.setJavaScriptEnabled(true);
 	        
 	        //Clicks in der Tabelle registrieren
 	        matchesTable.getSelectionModel().selectedItemProperty().addListener(
-	                (observable, oldValue, newValue) -> showRecipeDetails(newValue)); 
-	        
+                    (observable, oldValue, newValue) -> showRecipeDetails(newValue));
+
 	        //Slider Listener
 	        slider.valueProperty().addListener(
 	        		(observable, oldValue, newValue) -> setSlider(newValue));
-	        
-	        //TreeView
-	        TreeItem<String> rootItem = new TreeItem<String> ("Inbox");
-	        rootItem.setExpanded(true);
-	        for (int i = 1; i < 6; i++) {
-	            TreeItem<String> item = new TreeItem<String> ("Message" + i);            
-	            rootItem.getChildren().add(item);
-	        }        
-	        tree.setRoot(rootItem);      
+
+            //TreeView
+            LazyTreeItem rootItem = new LazyTreeItem("Favoriten");
+            tree.setRoot(rootItem);
+            rootItem.setExpanded(true);
+
+            //lade Rezept, wenn selektiertes Item ein Rezept ist
+            tree.getSelectionModel().selectedItemProperty().addListener(
+                    (observable, oldValue, newValue) -> showRecipeDetails((LazyTreeItem) newValue));
+            //ändere Expand-Status des markierten Items bei Mausklick
+            tree.setOnMouseClicked(event -> setExpanded((LazyTreeItem) tree.getSelectionModel().selectedItemProperty().getValue()));
+            //Kontext Menu
+            addFavouritesContext.setOnAction(event -> addToFavourites(matchesTable.getSelectionModel().selectedItemProperty().getValue()));
+            addNewFolder.setOnAction(event -> addNewFolder(((LazyTreeItem) tree.getSelectionModel().selectedItemProperty().getValue())));
+            deleteFavourites.setOnAction(event -> deleteEntry((LazyTreeItem)tree.getSelectionModel().selectedItemProperty().getValue()));
+
 	    }
 
 	    /**
@@ -116,8 +135,84 @@ import java.util.ArrayList;
 	        }   
 	    }
 
-        /*
-        Wird vom "Starte Suche" Button ausgeführt
+        /**
+         * Zeigt die Rezepte der selektierten Favoriten an
+         * @param item - selektiertes TreeItem
+         */
+        private void showRecipeDetails(LazyTreeItem item)
+        {
+            if(item.getIsRecipe())
+            {
+                String urlTitle = item.getUrlTitle();
+                webEngine.load(("http://www.rezeptewiki.org/wiki/" + urlTitle));
+            }
+        }
+
+        /**
+         * RezeptDetails holen für Favoriten holen
+         * @param search - SearchModel ,
+         */
+        private void addToFavourites(SearchModel search)
+        {
+            String urlTitle = "";
+            String name = "";
+
+            if (search != null)
+            {
+                urlTitle = search.getUrlTitle();
+                name = search.getMatch();
+            }
+
+            favourites.newFavourite(name, urlTitle);
+            rootItem = new LazyTreeItem("Favoriten");
+            rootItem.setExpanded(true);
+            tree.setRoot(rootItem);
+        }
+
+        /**
+         * fügt neuen Ordner hinzu und lädt den Tree neu
+         * @param item - TreeItem
+         */
+        private void addNewFolder(LazyTreeItem item) throws NullPointerException
+        {
+            if(!item.getIsRecipe())
+            {
+                favourites.newFolder(item.getId());
+                rootItem = new LazyTreeItem("Favoriten");
+                rootItem.setExpanded(true);
+                tree.setRoot(rootItem);
+            }
+        }
+
+        /**
+         * Löscht einen Ordner oder Rezept aus Favoriten
+         */
+        private void deleteEntry(LazyTreeItem item)
+        {
+            favourites.delete(item.getId());
+            rootItem = new LazyTreeItem("Favoriten");
+            rootItem.setExpanded(true);
+            tree.setRoot(rootItem);
+        }
+
+        /**
+         * Ändert den Expand-Status des selektierten TreeItems
+         */
+        @FXML
+        private void setExpanded(LazyTreeItem item) throws NullPointerException
+        {
+            if(!item.isExpanded())
+            {
+                favourites.expand(String.valueOf(item.getId()), "0");
+            }
+            else {
+                favourites.expand(String.valueOf(item.getId()), "1");
+            }
+        }
+
+        /**
+         *
+         * Wird vom "Starte Suche" Button ausgeführt
          */
 	    @FXML
 	    public void startSearch() throws org.json.simple.parser.ParseException, ParseException, IOException

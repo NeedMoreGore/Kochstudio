@@ -152,12 +152,6 @@
     -fx-background-color: derive(-fx-focus-color,30%);
 }
 
-#propertiesButton {
-    -fx-background-image: url(images/propertiesButton.png);
-    -fx-pref-width: 32;
-    -fx-pref-height: 32;
-}
-
 .tab-pane{
 	-fx-background-color: black;
 }
@@ -195,6 +189,20 @@
 .tree-view:focused .tree-cell:filled:focused {
 	-fx-background-color: #3B3B3B;
 	-fx-text-fill: white;
+	-fx-selected: #3B3B3B;
+}
+
+/*
+----------------------------------------------------------
+--------------------Custom Buttons------------------------
+----------------------------------------------------------
+*/
+
+
+#propertiesButton {
+    -fx-background-image: url(images/propertiesButton.png);
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
 }
 
 	

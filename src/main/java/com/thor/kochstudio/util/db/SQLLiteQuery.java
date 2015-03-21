@@ -118,9 +118,6 @@ public class SQLLiteQuery
         }
     }
 
-
-
-	
 	/**
 	 * Gibt eine ArrayList aus Arrays der gesuchten Einträge aus einer Tabelle zurück
 	 * @param tablename - Tablename
@@ -164,7 +161,7 @@ public class SQLLiteQuery
 	public ArrayList<String[]> writeResultSet(ResultSet resultSet, String[] columnnames) throws SQLException
 	{
 		
-		ArrayList<String[]> list = new ArrayList<String[]>();
+		ArrayList<String[]> list = new ArrayList<>();
 		
 		while(resultSet.next())
 		{
@@ -195,9 +192,37 @@ public class SQLLiteQuery
 
 		return query;
 	}
-	/**
-	 * ResultSet schließen
-	 */
+
+    /**
+     * Maximale Zahl einer Spalte anfragen
+     * @param tablename - Tabellenname
+     * @param column - Spalte mit max-Wert
+     * @throws SQLException
+     */
+    public String[] queryMax(String tablename, String column[]) throws SQLException
+    {
+        //für SQL-Abfragen
+        statement = connection.createStatement();
+
+        resultSet = statement.executeQuery("SELECT MAX(" + column[0] + ") AS \"MaxHierarchyLevel\" FROM " + tablename);
+        return writeSingleResultSet(resultSet, column);
+    }
+
+    /**
+     * Custom SQL Statement
+     */
+    public ArrayList<String[]> queryCustom(String custom, String columns[]) throws SQLException
+    {
+        //für SQL-Abfragen
+        statement = connection.createStatement();
+
+        resultSet = statement.executeQuery(custom);
+        return writeResultSet(resultSet, columns);
+    }
+
+    /**
+     * ResultSet schließen
+     */
 	public void close()
 	{
 		try
@@ -211,7 +236,8 @@ public class SQLLiteQuery
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+            if(Const.DEBUGMODE)
+			    e.printStackTrace();
 		}
 	}
 }

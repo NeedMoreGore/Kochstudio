@@ -27,19 +27,19 @@ public class JSONReader
 
 	/**
 	 * liest PageIDs der Kategorien aus
-	 * @return
+	 * @return ArrayList aus pageIDs
 	 */
 	public ArrayList<Integer> readCatPageIDs()
 	{
 
-		ArrayList<Integer> pageIDs = new ArrayList<Integer>();
+		ArrayList<Integer> pageIDs = new ArrayList<>();
 	    JSONArray arr = obj.getJSONObject("query").getJSONArray("categorymembers");
 
 	    for (int i = 0; i < arr.length(); i++)
 	    {
 	        int pageID = arr.getJSONObject(i).getInt("pageid");
 
-	        if(arr.getJSONObject(i).getString("title").contains("Kategorie") && !arr.getJSONObject(i).getString("title").contains("Getr\u00e4nke") &&!arr.getJSONObject(i).getString("title").contains("Pralinen, Bonbons und \u00c4hnliches"));
+	        if(arr.getJSONObject(i).getString("title").contains("Kategorie") && !arr.getJSONObject(i).getString("title").contains("Getr\u00e4nke") &&!arr.getJSONObject(i).getString("title").contains("Pralinen, Bonbons und \u00c4hnliches"))
 	        	pageIDs.add(pageID);
 	    }
 
@@ -48,11 +48,11 @@ public class JSONReader
 	
 	/**
 	 * Liest alle pageIDs der Rezepte aus
-	 * @return
+	 * @return gibt pageIDs der Rezepte zurück
 	 */
 	public ArrayList<Integer> readRecipePageIDs()
 	{
-		ArrayList<Integer> pageIDs = new ArrayList<Integer>();
+		ArrayList<Integer> pageIDs = new ArrayList<>();
 	    JSONArray arr = obj.getJSONObject("query").getJSONArray("categorymembers");
 	    
 	    for (int i = 0; i < arr.length(); i++)
@@ -68,15 +68,14 @@ public class JSONReader
 		
 	/**
 	 * liest den Seitentitel aus f�r Verlinkung
-	 * @return
+	 * @return Gibt den Seitentitel als String zurück
 	 */
 	public String readPageTitle()
 	{		
 		//kann bei getJSONObject(0) abst�rzen, wenn es nicht vorhanden ist
 		try
 		{
-			String title = obj.getJSONObject("parse").getJSONArray("sections").getJSONObject(0).getString("fromtitle");
-			return title;
+			return  obj.getJSONObject("parse").getJSONArray("sections").getJSONObject(0).getString("fromtitle");
 		}
 		catch(JSONException e)
 		{
@@ -86,11 +85,11 @@ public class JSONReader
 	
 	/**
 	 * liest die Zutaten eines Rezeptes aus
-	 * @return
+	 * @return Zutaten als ArrayList<String>
 	 */
 	public ArrayList<String> readIngredients()
 	{
-		ArrayList<String> ingredients = new ArrayList<String>();
+		ArrayList<String> ingredients = new ArrayList<>();
         HashSet<String> hs = new HashSet<>();
         int i = 0;
 
@@ -113,9 +112,19 @@ public class JSONReader
 		return ingredients;
 	}
 
+
+
+
+
+
+
+    //-----------------------------------------------//
+    //------------------DEPRECATED-------------------//
+    //-----------------------------------------------//
+
+
 	/**
 	 * lese json-file
-	 * @return
 	 * @throws IOException
 	 * @throws ParseException
      * @param path - path to .json to read

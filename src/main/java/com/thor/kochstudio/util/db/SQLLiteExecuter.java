@@ -86,7 +86,7 @@ public class SQLLiteExecuter
      * @param columns - Name der Spalten als Array
      * @param val - Werte  als Array (erste Spalte(ID) ist automatisch NULL)
      */
-    public void updateTable(String tablename, String[] columns, String... val)
+    public void insertIntoTable(String tablename, String[] columns, String... val)
     {
         String clms = "(";
         String vls = "(NULL,";
@@ -118,7 +118,7 @@ public class SQLLiteExecuter
 
         for (int i = 0; i < val.length; i++)
         {
-            vls += val[i];
+            vls += "'" + val[i] + "'";
 
             if (i + 1 == val.length)
             {
@@ -139,6 +139,14 @@ public class SQLLiteExecuter
             if(Const.DEBUGMODE)
                 e.printStackTrace();
         }
+    }
+
+    public void updateRowWhere(String tablename, String setAttribute, String setValue, String id) throws SQLException
+    {
+        statement = connection.createStatement();
+
+        statement.execute("UPDATE " + tablename + " SET " + setAttribute + " = '" + setValue +  "' WHERE ID = " + id);
+        statement.close();
     }
 
     /**

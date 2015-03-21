@@ -3,7 +3,7 @@ package com.thor.kochstudio.constants;
 public class Const 
 {
     //debugging
-    public static final boolean DEBUGMODE = true;
+    public static final boolean DEBUGMODE = false;
 
     //fenster
     public static final String WINDOWTITLE = "Kochstudio v0.2";
@@ -21,7 +21,7 @@ public class Const
     public static final String TB_RECIPEINFORMATION = "RECIPE_INFORMATION";
     public static final String TB_PAGE_IDS = "PAGE_IDS";
     public static final String TB_INGREDIENTS = "INGREDIENTS";
-
+    public static final String TB_FAVOURITES = "FAVOURITES_FOLDER";
     //UpdateMode
     public static final boolean UPDATE_INGREDIENTS = true;
 }
