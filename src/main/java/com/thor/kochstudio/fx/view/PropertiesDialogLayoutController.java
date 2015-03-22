@@ -1,10 +1,9 @@
 package com.thor.kochstudio.fx.view;
 
 import com.thor.kochstudio.MainApplication;
-import com.thor.kochstudio.fx.model.PropertiesDialogModel;
+import com.thor.kochstudio.functional.ManagePopupDialog;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -15,11 +14,9 @@ public class PropertiesDialogLayoutController
 {
     //Listview
     @FXML
-    private ListView<PropertiesDialogModel> ingredientsView;
+    private ListView<String> ingredientsView;
     @FXML
-    private ListCell<String> ingredientsCell;
-    @FXML
-    private ListView<PropertiesDialogModel> ignoreView;
+    private ListView<String> ignoreView;
     @FXML
     private Button filterButton;
     @FXML
@@ -31,9 +28,16 @@ public class PropertiesDialogLayoutController
 
     private MainApplication mainApp;
 
+    public void initialize()
+    {
+        addButton.setOnAction(event -> addToIgnore());
+        removeButton.setOnAction(event -> removeFromIgnore());
+    }
+
     public void init()
     {
         ingredientsView.setItems(mainApp.getIngredientsList());
+        ignoreView.setItems(mainApp.getIgnoreList());
     }
 
     /**
@@ -43,4 +47,17 @@ public class PropertiesDialogLayoutController
     {
         this.mainApp = mainApp;
     }
+
+    private void addToIgnore()
+    {
+        String select = ingredientsView.getSelectionModel().getSelectedItem();
+        ManagePopupDialog.addToIgnore(select);
+    }
+
+    private void removeFromIgnore()
+    {
+        ManagePopupDialog.removeFromIgnore(ignoreView.getSelectionModel().getSelectedItem());
+    }
+
+
 }

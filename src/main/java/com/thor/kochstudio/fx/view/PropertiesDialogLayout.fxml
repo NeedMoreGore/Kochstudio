@@ -4,14 +4,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../../../resources/themes/GreenTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thor.kochstudio.fx.view.PropertiesDialogLayoutController">
+<AnchorPane id="propertiesDialogPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../../../../resources/themes/GreenTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thor.kochstudio.fx.view.PropertiesDialogLayoutController">
    <children>
-      <ListView fx:id="ingredientsView" layoutY="67.0" prefHeight="333.0" prefWidth="231.0" />
+      <ListView fx:id="ingredientsView" layoutY="100.0" prefHeight="300.0" prefWidth="200.0" />
       <TextField fx:id="filterText" layoutX="59.0" layoutY="27.0" />
       <Label layoutX="18.0" layoutY="31.0" text="Filter:" />
       <Button fx:id="filterButton" layoutX="233.0" layoutY="25.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="50.0" text="Filter" />
-      <ListView fx:id="ignoreView" layoutX="376.0" layoutY="67.0" prefHeight="333.0" prefWidth="224.0" />
-      <Button fx:id="addButton" layoutX="248.0" layoutY="115.0" mnemonicParsing="false" text="&gt;&gt;&gt;" />
-      <Button fx:id="removeButton" layoutX="248.0" layoutY="162.0" mnemonicParsing="false" text="&lt;&lt;&lt;" />
+      <ListView fx:id="ignoreView" layoutX="400.0" layoutY="100.0" prefHeight="300.0" prefWidth="200.0" />
+      <Button fx:id="addButton" layoutX="258.0" layoutY="153.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="&gt;&gt;&gt;" />
+      <Button fx:id="removeButton" layoutX="258.0" layoutY="198.0" mnemonicParsing="false" text="&lt;&lt;&lt;" />
+      <Label layoutY="83.0" prefHeight="16.0" prefWidth="68.0" text="Verfügbar:" />
+      <Label layoutX="400.0" layoutY="83.0" text="Ignoriert:" />
    </children>
 </AnchorPane>

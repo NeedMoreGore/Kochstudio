@@ -5,7 +5,8 @@
 package com.thor.kochstudio;
 
 import com.thor.kochstudio.constants.Const;
-import com.thor.kochstudio.functional.SearchRecipes;
+import com.thor.kochstudio.functional.ManagePopupDialog;
+import com.thor.kochstudio.functional.ManageSearch;
 import com.thor.kochstudio.fx.model.FavouritesModel;
 import com.thor.kochstudio.fx.model.PropertiesDialogModel;
 import com.thor.kochstudio.fx.model.SearchModel;
@@ -22,6 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Collections;
 
 public class MainApplication extends Application {
 
@@ -31,8 +33,8 @@ public class MainApplication extends Application {
     private AnchorPane propertiesDialogLayout;
     
     private static ObservableList<SearchModel> matches = FXCollections.observableArrayList();
-    private static ObservableList<PropertiesDialogModel> ingredientsList = FXCollections.observableArrayList();
-    private static ObservableList<PropertiesDialogModel> ignoreList = FXCollections.observableArrayList();
+    private static ObservableList<String> ingredientsList = FXCollections.observableArrayList();
+    private static ObservableList<String> ignoreList = FXCollections.observableArrayList();
 
     @Deprecated
     private static ObservableList<FavouritesModel> favourites = FXCollections.observableArrayList();
@@ -168,20 +170,23 @@ public class MainApplication extends Application {
     public static void search()
     {  	
     	matches.clear();
-    	for(int i = 0; i < SearchRecipes.getMatches().size(); i++)
+    	for(int i = 0; i < ManageSearch.getMatches().size(); i++)
     		matches.add(new SearchModel(i));    	
     }
 
-
-
+    /**
+     * Liste mit Zutaten des Dialogs mit Zutaten füllen
+     */
     public static void initPropertiesList()
     {
-        int[] size = SearchRecipes.queryIngredientSize();
+        int[] size = ManagePopupDialog.queryIngredientSize();
 
         for (int i = size[0]; i <= size[1] ; i++)
         {
-            ingredientsList.add(new PropertiesDialogModel(size[1] - (size[1] - size[0])));
+            ingredientsList.add(new PropertiesDialogModel(size[1] - (size[1] - i)).getName());
         }
+
+        Collections.sort(ingredientsList);
     }
 
     public ObservableList<SearchModel> getMatches() 
@@ -189,10 +194,12 @@ public class MainApplication extends Application {
         return matches;
     }
 
-    public ObservableList<PropertiesDialogModel> getIngredientsList()
+    public ObservableList<String> getIngredientsList()
     {
         return ingredientsList;
     }
+
+    public ObservableList<String> getIgnoreList(){ return ignoreList;}
 
     public static void main(String[] args) 
     {

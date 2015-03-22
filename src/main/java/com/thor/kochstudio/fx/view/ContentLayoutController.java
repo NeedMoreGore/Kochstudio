@@ -6,7 +6,7 @@ package com.thor.kochstudio.fx.view;
 
 import com.thor.kochstudio.MainApplication;
 import com.thor.kochstudio.functional.ManageFavourites;
-import com.thor.kochstudio.functional.SearchRecipes;
+import com.thor.kochstudio.functional.ManageSearch;
 import com.thor.kochstudio.fx.model.LazyTreeItem;
 import com.thor.kochstudio.fx.model.SearchModel;
 import javafx.fxml.FXML;
@@ -244,7 +244,7 @@ import java.util.ArrayList;
 	    	}
 	    	try 
 	    	{
-				SearchRecipes.searchMatches(searchFor);
+				ManageSearch.searchMatches(searchFor);
 			}
             catch (Exception e)
 	    	{
@@ -264,7 +264,7 @@ import java.util.ArrayList;
             if(sliderText > -1)
             {
                 sliderLabel.setText(String.valueOf(sliderText));
-                SearchRecipes.setSliderValue(sliderText);
+                ManageSearch.setSliderValue(sliderText);
                 setSliderState(true);
             }
             else
@@ -280,7 +280,7 @@ import java.util.ArrayList;
          */
         public void setSliderState(boolean state)
         {
-            SearchRecipes.setSliderState(state);
+            ManageSearch.setSliderState(state);
         }
 
         public void showDialog()

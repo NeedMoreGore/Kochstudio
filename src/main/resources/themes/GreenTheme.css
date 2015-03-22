@@ -198,27 +198,25 @@
 	-fx-selected: #3B3B3B;
 }
 
-.check-box>.box {
-  -fx-background-insets: 0;
-  -fx-background-radius: 0;
-  -fx-background-color: black;
-}
-
-.check-box>.box>.mark {
-  -fx-background-color: red;
-  -fx-background-position: center;
-  -fx-background-repeat: stretch;
-  -fx-shape: none;
-}
-
-.check-box:selected>.box>.mark{
-  -fx-background-color: green;
-}
-
 .separator .line{
- -fx-background: black;
+    -fx-background: black;
  }
 
+ .list-view{
+    -fx-background-color: #3B3B3B;
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+ }
+
+ .list-cell{
+    -fx-background-color: #3B3B3B;
+    -fx-text-fill: #228B22;
+ }
+ .list-cell:focused{
+    -fx-text-fill: white;
+    }
 /*
 ----------------------------------------------------------
 --------------------Custom Buttons------------------------
@@ -230,6 +228,20 @@
     -fx-background-image: url(images/propertiesButton.png);
     -fx-pref-width: 24;
     -fx-pref-height: 24;
+}
+
+#addButton {
+    -fx-pref-width: 80;
+    -fx-pref-height: 25;
+}
+
+#removeButton {
+    -fx-pref-width: 80;
+    -fx-pref-height: 25;
+}
+
+#propertiesDialogPane{
+    -fx-background-color: #228B22;
 }
 
 	

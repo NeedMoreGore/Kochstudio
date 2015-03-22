@@ -4,7 +4,7 @@
 
 package com.thor.kochstudio.fx.model;
 
-import com.thor.kochstudio.functional.SearchRecipes;
+import com.thor.kochstudio.functional.ManageSearch;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -23,9 +23,9 @@ public class SearchModel
     public SearchModel(int index) 
     {
         count++;
-    	this.match = new SimpleStringProperty(SearchRecipes.getMatches().get(index).replace("_", " "));
+    	this.match = new SimpleStringProperty(ManageSearch.getMatches().get(index).replace("_", " "));
     	this.number = new SimpleStringProperty(String.valueOf(count)); 
-    	this.urlTitle = SearchRecipes.getMatches().get(index);
+    	this.urlTitle = ManageSearch.getMatches().get(index);
     }
 
     public String getMatch() 

@@ -1,6 +1,6 @@
 package com.thor.kochstudio.fx.model;
 
-import com.thor.kochstudio.functional.SearchRecipes;
+import com.thor.kochstudio.functional.ManagePopupDialog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -15,7 +15,7 @@ public class PropertiesDialogModel
     public PropertiesDialogModel(int index)
     {
         this.id = index;
-        this.name = new SimpleStringProperty(SearchRecipes.queryIngredient(index));
+        this.name = new SimpleStringProperty(ManagePopupDialog.queryIngredient(index));
     }
 
     public StringProperty getPropertyName()
@@ -25,7 +25,7 @@ public class PropertiesDialogModel
 
     public String getName()
     {
-        return name.toString();
+        return name.get();
     }
 
     public int getId()
