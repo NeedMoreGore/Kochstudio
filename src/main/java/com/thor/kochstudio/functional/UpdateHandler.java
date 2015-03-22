@@ -162,13 +162,13 @@ public class UpdateHandler
 
                     //String mit , abtrennen, wenn es nicht die letzte Zutat ist
                     if (!(j + 1 == ingredients.size()))
-                        ingredientString += ", ";
+                        ingredientString += ",";
                 }
 
                 //String DB-gerecht formatieren
                 ingredientString = ingredientString.replace("'", "");
 
-                String vls[] = {"'" + newtitle + "'", "'" + ingredientString + "'", "'" + pageID[0] + "'", "'" + ingredients.size() + "'"};
+                String vls[] = {newtitle,ingredientString,pageID[0],String.valueOf(ingredients.size())};
 
                 //nur wenn das Rezept einen Titel hat
                 if (newtitle != null) {

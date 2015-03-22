@@ -22,6 +22,7 @@ public class Const
     public static final String TB_PAGE_IDS = "PAGE_IDS";
     public static final String TB_INGREDIENTS = "INGREDIENTS";
     public static final String TB_FAVOURITES = "FAVOURITES_FOLDER";
+
     //UpdateMode
-    public static final boolean UPDATE_INGREDIENTS = true;
+    public static final boolean UPDATE_INGREDIENTS = false;
 }

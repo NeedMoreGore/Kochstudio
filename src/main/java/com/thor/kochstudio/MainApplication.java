@@ -13,9 +13,11 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -95,6 +97,16 @@ public class MainApplication extends Application {
             e.printStackTrace();
         }
     }
+
+    public void showModalDialog()
+    {
+                Stage stage = new Stage();
+                Scene page2 = new Scene(new Group(new Text(20, 20,"This is a new dialog!")));
+                stage.setScene(page2);
+                stage.show();
+
+    }
+
 
     public Stage getPrimaryStage() {
         return primaryStage;

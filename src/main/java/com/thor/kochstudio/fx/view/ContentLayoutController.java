@@ -49,12 +49,12 @@ import java.util.ArrayList;
 	    private TextField tf7;
 	    @FXML
 	    private TextField tf8;
+        //Search: properties button
+        @FXML
+        private Button propertiesButton;
         //Search: ContextMenu
         @FXML
         private MenuItem addFavouritesContext;
-        //Search: CheckBox
-        @FXML
-        private CheckBox checkbox;
 	    //Favourites: TreeView
 	    @FXML
 	    private TreeView<String> tree;
@@ -114,6 +114,7 @@ import java.util.ArrayList;
             addFavouritesContext.setOnAction(event -> addToFavourites(matchesTable.getSelectionModel().selectedItemProperty().getValue()));
             addNewFolder.setOnAction(event -> addNewFolder(((LazyTreeItem) tree.getSelectionModel().selectedItemProperty().getValue())));
             deleteFavourites.setOnAction(event -> deleteEntry((LazyTreeItem)tree.getSelectionModel().selectedItemProperty().getValue()));
+            propertiesButton.setOnAction(event -> showDialog());
 
 	    }
 
@@ -257,21 +258,31 @@ import java.util.ArrayList;
 	    {
             slider.setValue(new_val.doubleValue());
             int sliderText = (int) Math.round(slider.getValue());
-            sliderLabel.setText(String.valueOf(sliderText));
-            SearchRecipes.setSliderValue(sliderText);
+            if(sliderText > -1)
+            {
+                sliderLabel.setText(String.valueOf(sliderText));
+                SearchRecipes.setSliderValue(sliderText);
+                setSliderState(true);
+            }
+            else
+            {
+                sliderLabel.setText("Off");
+                setSliderState(false);
+            }
+
 	    }
 
         /**
          * Slider Status aktualisieren und switchen
          */
-        @FXML
-        public void setSliderState()
+        public void setSliderState(boolean state)
         {
-            boolean state = SearchRecipes.getSliderState();
-            if(state)
-                SearchRecipes.setSliderState(false);
-            else
-                SearchRecipes.setSliderState(true);
+            SearchRecipes.setSliderState(state);
+        }
+
+        public void showDialog()
+        {
+            mainApp.showModalDialog();
         }
 
 }

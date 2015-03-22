@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
@@ -20,34 +21,34 @@
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="322.0" prefWidth="446.0">
                                        <children>
-                                          <TextField fx:id="tf1" layoutX="65.0" layoutY="15.0" prefHeight="20.0" prefWidth="150.0" />
-                                          <TextField fx:id="tf2" layoutX="65.0" layoutY="55.0" />
-                                          <TextField fx:id="tf3" layoutX="65.0" layoutY="95.0" />
-                                          <TextField fx:id="tf4" layoutX="65.0" layoutY="135.0" />
-                                          <TextField fx:id="tf5" layoutX="275.0" layoutY="15.0" />
-                                          <TextField fx:id="tf6" layoutX="275.0" layoutY="55.0" />
-                                          <TextField fx:id="tf7" layoutX="275.0" layoutY="95.0" />
-                                          <TextField fx:id="tf8" layoutX="275.0" layoutY="135.0" />
-                                          <Label layoutX="14.0" layoutY="18.0" text="1. Zutat" />
-                                          <Label layoutX="14.0" layoutY="61.0" text="2.. Zutat" />
-                                          <Label layoutX="14.0" layoutY="104.0" text="3. Zutat" />
-                                          <Label layoutX="14.0" layoutY="145.0" text="4. Zutat" />
-                                          <Label layoutX="223.0" layoutY="18.0" text="5. Zutat" />
-                                          <Label layoutX="223.0" layoutY="59.0" text="6. Zutat" />
-                                          <Label layoutX="223.0" layoutY="100.0" text="7. Zutat" />
-                                          <Label layoutX="223.0" layoutY="142.0" text="8. Zutat" />
-                                          <Button layoutX="289.0" layoutY="180.0" mnemonicParsing="false" onAction="#startSearch" prefHeight="25.0" prefWidth="86.0" text="Starte Suche" />
+                                          <TextField fx:id="tf1" layoutX="65.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <TextField fx:id="tf2" layoutX="65.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <TextField fx:id="tf3" layoutX="65.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <TextField fx:id="tf4" layoutX="65.0" layoutY="105.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <TextField fx:id="tf5" layoutX="275.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <TextField fx:id="tf6" layoutX="275.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <TextField fx:id="tf7" layoutX="275.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <TextField fx:id="tf8" layoutX="275.0" layoutY="105.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+                                          <Label layoutX="14.0" layoutY="17.0" text="1. Zutat" />
+                                          <Label layoutX="14.0" layoutY="47.0" text="2.. Zutat" />
+                                          <Label layoutX="14.0" layoutY="77.0" text="3. Zutat" />
+                                          <Label layoutX="14.0" layoutY="107.0" text="4. Zutat" />
+                                          <Label layoutX="223.0" layoutY="17.0" text="5. Zutat" />
+                                          <Label layoutX="223.0" layoutY="47.0" text="6. Zutat" />
+                                          <Label layoutX="223.0" layoutY="77.0" text="7. Zutat" />
+                                          <Label layoutX="223.0" layoutY="107.0" text="8. Zutat" />
+                                          <Button layoutX="159.0" layoutY="205.0" mnemonicParsing="false" onAction="#startSearch" prefHeight="25.0" prefWidth="86.0" text="Starte Suche" />
                                           <Label layoutX="14.0" layoutY="242.0" prefHeight="16.0" prefWidth="419.0" text="Hinweis: Zutaten nur im Singular suchen, sonst werden sie nicht gefunden." />
-                                          <Label layoutX="3.0" layoutY="187.0" text="max. Zukauf:" />
-                                          <Slider fx:id="slider" blockIncrement="1.0" layoutX="72.0" layoutY="187.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" />
-                                          <Label fx:id="sliderLabel" alignment="CENTER_RIGHT" layoutX="206.0" layoutY="180.0" prefHeight="28.0" prefWidth="19.0" text="0">
+                                          <Label layoutX="65.0" layoutY="156.0" text="max. Zukauf:" />
+                                          <Slider fx:id="slider" blockIncrement="1.0" layoutX="149.0" layoutY="158.0" majorTickUnit="1.0" max="10.0" min="-1.0" minorTickCount="1" value="-1.0" />
+                                          <Label fx:id="sliderLabel" alignment="CENTER_RIGHT" layoutX="289.0" layoutY="150.0" prefHeight="28.0" prefWidth="19.0" text="Off">
                                              <font>
                                                 <Font name="Arial Bold" size="30.0" />
                                              </font>
                                           </Label>
-                                          <CheckBox fx:id="checkBox" layoutX="129.0" layoutY="215.0" mnemonicParsing="false" onAction="#setSliderState" prefHeight="17.0" prefWidth="10.0" />
-                                          <Label layoutX="85.0" layoutY="216.0" text="On/Off:" />
-                                          <Button fx:id="propertiesButton" layoutX="174.0" layoutY="208.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" />
+                                          <Button fx:id="propertiesButton" layoutX="334.0" layoutY="152.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showDialog" prefHeight="0.0" prefWidth="0.0" />
+                                          <Separator layoutY="138.0" prefWidth="446.0" />
+                                          <Separator layoutY="190.0" prefWidth="446.0" />
                                        </children>
                                     </AnchorPane>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="280.0" prefWidth="300.0">
@@ -96,9 +97,9 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <StackPane fx:id="root" layoutX="-7.0" prefHeight="708.0" prefWidth="830.0">
+                  <StackPane fx:id="root" prefHeight="708.0" prefWidth="830.0">
                      <children>
-                        <WebView fx:id="webView" prefHeight="460.0" prefWidth="200.0" />
+                        <WebView fx:id="webView" prefHeight="708.0" prefWidth="864.0" />
                      </children>
                   </StackPane>
                </children>
