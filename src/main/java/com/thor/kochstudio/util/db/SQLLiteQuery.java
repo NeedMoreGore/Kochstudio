@@ -204,7 +204,23 @@ public class SQLLiteQuery
         //für SQL-Abfragen
         statement = connection.createStatement();
 
-        resultSet = statement.executeQuery("SELECT MAX(" + column[0] + ") AS \"MaxHierarchyLevel\" FROM " + tablename);
+        resultSet = statement.executeQuery("SELECT MAX(" + column[0] + ") AS \"" + column[0] + "\" FROM " + tablename);
+        return writeSingleResultSet(resultSet, column);
+    }
+
+    /**
+     *
+     * @param tablename - Tabellenname
+     * @param column - Spaltenname
+     * @return - Gibt Min-Wert als Array zurück
+     * @throws SQLException
+     */
+    public String[] queryMin(String tablename, String column[]) throws SQLException
+    {
+        //für SQL-Abfragen
+        statement = connection.createStatement();
+
+        resultSet = statement.executeQuery("SELECT MIN(" + column[0] + ") AS \"" + column[0] + "\" FROM " + tablename);
         return writeSingleResultSet(resultSet, column);
     }
 

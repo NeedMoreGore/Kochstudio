@@ -7,17 +7,18 @@ package com.thor.kochstudio;
 import com.thor.kochstudio.constants.Const;
 import com.thor.kochstudio.functional.SearchRecipes;
 import com.thor.kochstudio.fx.model.FavouritesModel;
+import com.thor.kochstudio.fx.model.PropertiesDialogModel;
 import com.thor.kochstudio.fx.model.SearchModel;
 import com.thor.kochstudio.fx.view.ContentLayoutController;
+import com.thor.kochstudio.fx.view.PropertiesDialogLayoutController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,9 +26,13 @@ import java.io.IOException;
 public class MainApplication extends Application {
 
     private Stage primaryStage;
+
     private BorderPane rootLayout;
+    private AnchorPane propertiesDialogLayout;
     
     private static ObservableList<SearchModel> matches = FXCollections.observableArrayList();
+    private static ObservableList<PropertiesDialogModel> ingredientsList = FXCollections.observableArrayList();
+    private static ObservableList<PropertiesDialogModel> ignoreList = FXCollections.observableArrayList();
 
     @Deprecated
     private static ObservableList<FavouritesModel> favourites = FXCollections.observableArrayList();
@@ -46,8 +51,9 @@ public class MainApplication extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle(Const.WINDOWTITLE);
 
-        initRootLayout();    
-        showContentLayout();     
+        initRootLayout();
+        showContentLayout();
+        initModalDialog();
     }
 
     /**
@@ -98,13 +104,57 @@ public class MainApplication extends Application {
         }
     }
 
+
     public void showModalDialog()
     {
-                Stage stage = new Stage();
-                Scene page2 = new Scene(new Group(new Text(20, 20,"This is a new dialog!")));
-                stage.setScene(page2);
-                stage.show();
+        if(propertiesDialogLayout.getScene() != null)
+        {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("/java/com/thor/kochstudio/fx/view/PropertiesDialogLayout.fxml"));
 
+            try
+            {
+                propertiesDialogLayout = (AnchorPane) loader.load();
+                //Zugriff des Controller auf MainApp
+                PropertiesDialogLayoutController controller = loader.getController();
+                controller.setMainApp(this);
+                controller.init();
+            }
+            catch (IOException e)
+            {
+                if (Const.DEBUGMODE)
+                    e.printStackTrace();
+            }
+        }
+
+            Stage stage = new Stage();
+            Scene page2 = new Scene(propertiesDialogLayout);
+            stage.setScene(page2);
+            stage.setX(primaryStage.getX() + (primaryStage.getScene().getWidth() / 2));
+            stage.setY(primaryStage.getY() + (primaryStage.getScene().getHeight() / 2));
+            stage.setAlwaysOnTop(true);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.show();
+    }
+
+    public void initModalDialog()
+    {
+        initPropertiesList();
+
+        try {
+            //lade conententLayout
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApplication.class.getResource("/java/com/thor/kochstudio/fx/view/PropertiesDialogLayout.fxml"));
+            propertiesDialogLayout = (AnchorPane) loader.load();
+
+            //Zugriff des Controller auf MainApp
+            PropertiesDialogLayoutController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.init();
+        } catch (IOException e) {
+            if (Const.DEBUGMODE)
+                e.printStackTrace();
+        }
     }
 
 
@@ -122,9 +172,26 @@ public class MainApplication extends Application {
     		matches.add(new SearchModel(i));    	
     }
 
+
+
+    public static void initPropertiesList()
+    {
+        int[] size = SearchRecipes.queryIngredientSize();
+
+        for (int i = size[0]; i <= size[1] ; i++)
+        {
+            ingredientsList.add(new PropertiesDialogModel(size[1] - (size[1] - size[0])));
+        }
+    }
+
     public ObservableList<SearchModel> getMatches() 
     {
         return matches;
+    }
+
+    public ObservableList<PropertiesDialogModel> getIngredientsList()
+    {
+        return ingredientsList;
     }
 
     public static void main(String[] args) 

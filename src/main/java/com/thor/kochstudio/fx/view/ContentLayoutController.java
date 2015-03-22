@@ -114,7 +114,10 @@ import java.util.ArrayList;
             addFavouritesContext.setOnAction(event -> addToFavourites(matchesTable.getSelectionModel().selectedItemProperty().getValue()));
             addNewFolder.setOnAction(event -> addNewFolder(((LazyTreeItem) tree.getSelectionModel().selectedItemProperty().getValue())));
             deleteFavourites.setOnAction(event -> deleteEntry((LazyTreeItem)tree.getSelectionModel().selectedItemProperty().getValue()));
+
             propertiesButton.setOnAction(event -> showDialog());
+
+
 
 	    }
 
